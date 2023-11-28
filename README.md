@@ -34,15 +34,9 @@ streamlit run app.py
 #### With Description of App
 ![](screenshots/iris_eda_desc.png)
 
-##### NB About Changes
-+ app.py :from tutorial video
-+ iris_app.py :restructured
-
-
 
 #### By
 + Sazzad Hussain Farhaan
-
 
 #### More Thanks to The Streamlit Team
 + Awesome Tool
