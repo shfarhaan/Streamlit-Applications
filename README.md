@@ -1,5 +1,3 @@
-This is a README file for the Streamlit-Applications repository:
-
 # Streamlit-Applications
 This repository contains various applications built using Streamlit, a Python framework for creating interactive web apps. Streamlit allows you to turn your data analysis and machine learning models into beautiful and easy-to-use web apps with just a few lines of code.
 
@@ -25,4 +23,4 @@ Then, you can clone this repository and navigate to the application folder. For 
 This will open a new tab in your browser where you can interact with the app.
 
 ## Feedback and contributions
-If you have any feedback, suggestions, or questions, feel free to contact me at shfarhaan@gmail.com. If you want to contribute to this repository, you can fork it and make a pull request. I will be happy to review and merge your code.
+If you have any feedback, suggestions, or questions, feel free to contact me at shfarhaan21@gmail.com. If you want to contribute to this repository, you can fork it and make a pull request. I will be happy to review and merge your code.
