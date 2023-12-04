@@ -70,25 +70,25 @@ if uploaded_file is not None:
     st.subheader("Updated Dataset after Handling Missing Values:")
     st.write(df.head())
     
-# Feature Selection
-st.subheader("Feature Selection:")
-selected_features = st.multiselect("Select Features", df.columns)
+    # Feature Selection
+    st.subheader("Feature Selection:")
+    selected_features = st.multiselect("Select Features", df.columns)
 
-# Validate if features are selected
-if not selected_features:
-    st.warning("Please select at least one feature.")
-else:
-    # Split the dataset into features and target variable based on user-selected features
-    X = df[selected_features]
-    y = df["target_variable_column_name"]  # Replace with your target variable column name
+    # Validate if features are selected
+    if not selected_features:
+        st.warning("Please select at least one feature.")
+    else:
+        # Split the dataset into features and target variable based on user-selected features
+        X = df[selected_features]
+        y = df["target_variable_column_name"]  # Replace with your target variable column name
 
-    # Display selected features
-    st.write("Selected Features:")
-    st.write(selected_features)
+        # Display selected features
+        st.write("Selected Features:")
+        st.write(selected_features)
 
-    # Split the dataset into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
+        # Split the dataset into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
     # Visualizations
     st.subheader("Visualizations:")
     # Customize your visualizations based on your dataset and objectives
