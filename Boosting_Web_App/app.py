@@ -74,12 +74,6 @@ if uploaded_file is not None:
     st.subheader("Visualizations:")
     # Customize your visualizations based on your dataset and objectives
 
-    # Split the dataset into features and target variable
-    X = df.drop("target_variable_column_name", axis=1)  # Replace with your target variable column name
-    y = df["target_variable_column_name"]
-
-    # Split the dataset into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     # Define hyperparameter search spaces for different boosting algorithms
     ada_params = {'n_estimators': [50, 100, 200], 'learning_rate': [0.01, 0.1, 0.2]}
