@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
+
 from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -135,6 +137,8 @@ def page_visualization():
         X = st.session_state.data.drop(columns=[target_column])
         y = st.session_state.data[target_column]
 
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
         # Add your machine learning model training and evaluation code here
         # For example:
         if selected_algorithm == "Decision Tree":
@@ -161,27 +165,30 @@ def page_visualization():
         st.write("Cross-Validation Results:")
         st.write("Accuracy: {:.2f} (+/- {:.2f})".format(cv_results.mean(), cv_results.std() * 2))
 
-        # Train the model on the entire dataset for prediction
-        model.fit(X, y)
+        model.fit(X_train, y_train)
 
-        # Make predictions on the same dataset (for simplicity, use the same data for training and testing)
-        y_pred = model.predict(X)
+        # Make predictions on the testing set
+        y_pred = model.predict(X_test)
 
-    # Display precision, recall, and f1-score
-        st.write("Precision: {:.2f}".format(precision_score(y, y_pred, average='weighted')))
-        st.write("Recall: {:.2f}".format(recall_score(y, y_pred, average='weighted')))
-        st.write("F1-Score: {:.2f}".format(f1_score(y, y_pred, average='weighted')))
+        # Display precision, recall, and f1-score
+        st.write("### Classification Metrics:")
+        precision = precision_score(y_test, y_pred, average='weighted')
+        recall = recall_score(y_test, y_pred, average='weighted')
+        f1 = f1_score(y_test, y_pred, average='weighted')
 
-        # Confusion Matrix
-        st.subheader("Confusion Matrix")
-        conf_matrix = confusion_matrix(y, y_pred)
+        st.write(f"Precision: {precision:.2f}")
+        st.write(f"Recall: {recall:.2f}")
+        st.write(f"F1-Score: {f1:.2f}")
 
-        # Plotting the confusion matrix
-        fig, ax = plt.subplots()
-        sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, square=True, ax=ax)
-        ax.set_xlabel('Predicted Labels')
-        ax.set_ylabel('True Labels')
+        # Display confusion matrix
+        st.write("### Confusion Matrix:")
+        cm = confusion_matrix(y_test, y_pred)
+        fig, ax = plt.subplots(figsize=(8, 6))
+        sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=model.classes_, yticklabels=model.classes_, ax=ax)
+        plt.xlabel("Predicted")
+        plt.ylabel("True")
         st.pyplot(fig)
+
 
 # Main function to run the application
 def main():
