@@ -106,27 +106,30 @@ def page_visualization():
     if selected_visualization == "Histogram":
         st.subheader("Histogram")
         column_name = st.selectbox("Select a column for histogram", st.session_state.data.columns)
-        plt.hist(st.session_state.data[column_name])
-        st.pyplot()
+        fig, ax = plt.subplots()
+        ax.hist(st.session_state.data[column_name])
+        st.pyplot(fig)
     elif selected_visualization == "Scatter Plot":
         st.subheader("Scatter Plot")
         x_column = st.selectbox("Select X-axis column", st.session_state.data.columns)
         y_column = st.selectbox("Select Y-axis column", st.session_state.data.columns)
-        plt.scatter(st.session_state.data[x_column], st.session_state.data[y_column])
-        st.pyplot()
+        fig, ax = plt.subplots()
+        ax.scatter(st.session_state.data[x_column], st.session_state.data[y_column])
+        st.pyplot(fig)
     elif selected_visualization == "Box Plot":
         st.subheader("Box Plot")
         x_column = st.selectbox("Select X-axis column", st.session_state.data.columns)
         y_column = st.selectbox("Select Y-axis column", st.session_state.data.columns)
-        sns.boxplot(data=st.session_state.data, x=x_column, y=y_column)
-        st.pyplot()
+        fig, ax = plt.subplots()
+        sns.boxplot(data=st.session_state.data, x=x_column, y=y_column, ax=ax)
+        st.pyplot(fig)
 
     # Perform machine learning with selected algorithm and cross-validation
     if selected_algorithm and selected_cv:
         st.subheader("Machine Learning Evaluation Metrics")
 
-        # Assuming 'target' is the name of the target column in your dataset
-        target_column = 'target'
+        # Allow the user to select the target column
+        target_column = st.selectbox("Select Target Column", st.session_state.data.columns)
 
         # Split the data into features and target
         X = st.session_state.data.drop(columns=[target_column])
@@ -165,9 +168,9 @@ def page_visualization():
         y_pred = model.predict(X)
 
         # Display precision, recall, and f1-score
-        st.write("Precision: {:.2f}".format(precision_score(y, y_pred)))
-        st.write("Recall: {:.2f}".format(recall_score(y, y_pred)))
-        st.write("F1-Score: {:.2f}".format(f1_score(y, y_pred)))
+        st.write("Precision: {:.2f}".format(precision_score(y, y_pred, average='weighted')))
+        st.write("Recall: {:.2f}".format(recall_score(y, y_pred, average='weighted')))
+        st.write("F1-Score: {:.2f}".format(f1_score(y, y_pred, average='weighted')))
 
 # Main function to run the application
 def main():
@@ -179,7 +182,7 @@ def main():
         session_state.data = None
 
     # Create a drop-down menu for navigation
-    page_options = ["Upload Dataset", "Missing Values Handling", "Statistics"]
+    page_options = ["Upload Dataset", "Missing Values Handling", "Visualizationa and Metrics"]
     selected_page = st.sidebar.selectbox("Select Page", page_options)
 
     # Display the selected page
@@ -187,7 +190,7 @@ def main():
         page_upload_dataset()
     elif selected_page == "Missing Values Handling":
         page_missing_values_handling()
-    elif selected_page == "Visualizationa and Performance Metrics":
+    elif selected_page == "Visualizationa and Metrics":
         page_visualization()
 
 if __name__ == "__main__":
