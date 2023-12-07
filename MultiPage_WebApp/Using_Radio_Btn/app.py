@@ -37,9 +37,10 @@ def page_missing_values_handling():
     # Handle missing values (replace NaN with mean for numerical columns as an example)
     st.subheader("Handle Missing Values")
     for column in df.columns:
-        if df[column].dtype == np.number:
+        if np.issubdtype(df[column].dtype, np.floating):
             mean_value = df[column].mean()
             df[column].fillna(mean_value, inplace=True)
+
 
     st.success("Missing values handled successfully!")
     st.write(df.head())
