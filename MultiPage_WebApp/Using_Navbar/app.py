@@ -40,15 +40,37 @@ def page_missing_values_handling():
     if "data" not in st.session_state:
         st.warning("Please upload a dataset on the first page.")
         st.stop()
-    
+
     # Display the dataset
     st.write("### Original Dataset")
     st.write(st.session_state.data)
-    
-    # Perform missing values handling (e.g., fillna)
-    df_filled = st.session_state.data.fillna(method="ffill")  # Replace with your own handling method
-    st.write("### Dataset with Missing Values Handling")
+
+    # Choose method for missing values handling
+    method_options = ["Forward Fill", "Backward Fill", "Mean", "Median", "Custom"]  # Add more options if needed
+    selected_method = st.selectbox("Select Method for Missing Values Handling", method_options)
+
+    # Perform missing values handling based on the selected method
+    if selected_method == "Forward Fill":
+        df_filled = st.session_state.data.fillna(method="ffill")
+    elif selected_method == "Backward Fill":
+        df_filled = st.session_state.data.fillna(method="bfill")
+    elif selected_method == "Mean":
+        df_filled = st.session_state.data.fillna(st.session_state.data.mean())
+    elif selected_method == "Median":
+        df_filled = st.session_state.data.fillna(st.session_state.data.median())
+    elif selected_method == "Custom":
+        # Custom handling method using user input
+        custom_value = st.text_input("Enter a custom value for missing values:", "")
+        try:
+            custom_value = float(custom_value)
+            df_filled = st.session_state.data.fillna(custom_value)
+        except ValueError:
+            st.warning("Please enter a valid numeric value.")
+
+    # Display the dataset with missing values handling
+    st.write(f"### Dataset with {selected_method} Handling")
     st.write(df_filled)
+
 
 # Page 3: Perform descriptive and inferential statistics
 def page_statistics():
