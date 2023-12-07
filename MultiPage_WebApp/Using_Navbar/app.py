@@ -46,9 +46,8 @@ def main():
     st.set_page_config(page_title="Data Analysis App", page_icon="📊")
 
     # Initialize SessionState to store data between pages
-    session_state = st.session_state
-    if not hasattr(session_state, "data"):
-        session_state.data = None
+    if "data" not in st.session_state:
+        st.session_state.data = None
 
     # Navigation bar
     pages = ["Upload Dataset", "Missing Values Handling", "Statistics"]
@@ -64,3 +63,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
