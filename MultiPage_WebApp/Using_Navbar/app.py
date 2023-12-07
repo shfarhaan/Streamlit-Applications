@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from sklearn.model_selection import cross_val_score
-from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -167,10 +167,21 @@ def page_visualization():
         # Make predictions on the same dataset (for simplicity, use the same data for training and testing)
         y_pred = model.predict(X)
 
-        # Display precision, recall, and f1-score
+    # Display precision, recall, and f1-score
         st.write("Precision: {:.2f}".format(precision_score(y, y_pred, average='weighted')))
         st.write("Recall: {:.2f}".format(recall_score(y, y_pred, average='weighted')))
         st.write("F1-Score: {:.2f}".format(f1_score(y, y_pred, average='weighted')))
+
+        # Confusion Matrix
+        st.subheader("Confusion Matrix")
+        conf_matrix = confusion_matrix(y, y_pred)
+
+        # Plotting the confusion matrix
+        fig, ax = plt.subplots()
+        sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, square=True, ax=ax)
+        ax.set_xlabel('Predicted Labels')
+        ax.set_ylabel('True Labels')
+        st.pyplot(fig)
 
 # Main function to run the application
 def main():
