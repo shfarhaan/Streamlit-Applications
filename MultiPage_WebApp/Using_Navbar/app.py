@@ -8,7 +8,7 @@ def page_upload_dataset():
     if uploaded_file is not None:
         # Read the dataset and store it in SessionState
         df = pd.read_csv(uploaded_file)
-        session_state.data = df
+        st.session_state.data = df
         st.success("Dataset uploaded successfully!")
 
 # Page 2: Perform missing values handling
@@ -46,22 +46,21 @@ def main():
     st.set_page_config(page_title="Data Analysis App", page_icon="📊")
 
     # Initialize SessionState to store data between pages
-    if "data" not in st.session_state:
-        st.session_state.data = None
+    session_state = st.session_state
+    if not hasattr(session_state, "data"):
+        session_state.data = None
 
-    # Navigation bar
-    pages = ["Upload Dataset", "Missing Values Handling", "Statistics"]
-    page = st.sidebar.selectbox("Select Page", pages)
+    # Create a drop-down menu for navigation
+    page_options = ["Upload Dataset", "Missing Values Handling", "Statistics"]
+    selected_page = st.sidebar.selectbox("Select Page", page_options)
 
     # Display the selected page
-    if page == "Upload Dataset":
+    if selected_page == "Upload Dataset":
         page_upload_dataset()
-    elif page == "Missing Values Handling":
+    elif selected_page == "Missing Values Handling":
         page_missing_values_handling()
-    elif page == "Statistics":
+    elif selected_page == "Statistics":
         page_statistics()
 
 if __name__ == "__main__":
     main()
-
-
