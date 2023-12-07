@@ -1,16 +1,39 @@
 import streamlit as st
 import pandas as pd
 
-# Page 1: Upload Dataset
+# Page 1: Upload Dataset with Descriptive and Inferential Statistics
 def page_upload_dataset():
     st.title("Upload Dataset")
+
+    # File uploader for CSV
     uploaded_file = st.file_uploader("Choose a CSV file", type=["csv"])
+
     if uploaded_file is not None:
         # Read the dataset and store it in SessionState
         df = pd.read_csv(uploaded_file)
         st.session_state.data = df
-        st.success("Dataset uploaded successfully!")
 
+        # Display basic information about the dataset
+        st.write("### Basic Information about the Dataset")
+        st.write(f"Number of Rows: {df.shape[0]}")
+        st.write(f"Number of Columns: {df.shape[1]}")
+        st.write(f"Column Names: {', '.join(df.columns)}")
+
+        # Display the first few rows of the dataset
+        st.write("### Preview of the Dataset")
+        st.write(df.head())
+
+        # Descriptive Statistics
+        st.write("### Descriptive Statistics")
+        st.write(df.describe())
+
+        # Inferential Statistics (example: correlation matrix)
+        st.write("### Inferential Statistics (Correlation Matrix)")
+        correlation_matrix = df.corr()
+        st.write(correlation_matrix)
+
+        st.success("Dataset uploaded successfully!")
+        
 # Page 2: Perform missing values handling
 def page_missing_values_handling():
     st.title("Missing Values Handling")
