@@ -10,7 +10,7 @@ import seaborn as sns
 def upload_data():
     st.title("Customer Churn Prediction")
     st.sidebar.title("Navigation")
-    page = st.sidebar.selectbox("Go to", ["Upload Data", "Explore Data", "Predict Churn"])
+    page = st.sidebar.selectbox("Go to", ["Upload Data", "Explore Data", "Predict Churn"], key="upload_data")
 
     if page == "Upload Data":
         st.header("Upload Your Dataset")
@@ -38,8 +38,7 @@ def explore_data():
         st.header("Data Visualization")
         st.subheader("Correlation Matrix")
         corr_matrix = st.session_state.df.corr()
-        sns.heatmap(corr_matrix, annot=True, cmap="coolwarm")
-        st.pyplot()
+        st.write(sns.heatmap(corr_matrix, annot=True, cmap="coolwarm").figure)
 
         st.subheader("Customer Churn Distribution")
         churn_count = st.session_state.df['Churn'].value_counts()
