@@ -29,7 +29,7 @@ def upload_data():
 def explore_data():
     st.title("Explore Data")
     st.sidebar.title("Navigation")
-    page = st.sidebar.selectbox("Go to", ["Upload Data", "Explore Data", "Predict Churn"])
+    page = st.sidebar.selectbox("Go to", ["Upload Data", "Explore Data", "Predict Churn"], key="explore_data")
 
     if hasattr(st.session_state, "df"):
         st.header("Data Overview")
@@ -49,7 +49,7 @@ def explore_data():
 def predict_churn():
     st.title("Predict Churn")
     st.sidebar.title("Navigation")
-    page = st.sidebar.selectbox("Go to", ["Upload Data", "Explore Data", "Predict Churn"])
+    page = st.sidebar.selectbox("Go to", ["Upload Data", "Explore Data", "Predict Churn"], key="predict_churn")
 
     if hasattr(st.session_state, "df"):
         st.header("Build a Churn Prediction Model")
