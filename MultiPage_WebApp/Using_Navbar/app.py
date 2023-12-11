@@ -126,68 +126,78 @@ def page_visualization():
         sns.boxplot(data=st.session_state.data, x=x_column, y=y_column, ax=ax)
         st.pyplot(fig)
 
-    # Perform machine learning with selected algorithm and cross-validation
-    if selected_algorithm and selected_cv:
-        st.subheader("Machine Learning Evaluation Metrics")
+        # Perform machine learning with selected algorithm and cross-validation
+        if selected_algorithm and selected_cv:
+            st.subheader("Machine Learning Evaluation Metrics")
 
-        # Allow the user to select the target column
-        target_column = st.selectbox("Select Target Column", st.session_state.data.columns)
+            # Allow the user to select the target column
+            target_column = st.selectbox("Select Target Column", st.session_state.data.columns)
 
-        # Split the data into features and target
-        X = st.session_state.data.drop(columns=[target_column])
-        y = st.session_state.data[target_column]
+            # Ensure the target column is numeric
+            if st.session_state.data[target_column].dtype == 'object':
+                st.warning(f"Target column '{target_column}' is non-numeric. Please encode it before proceeding.")
+                st.stop()
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+            # Split the data into features and target
+            X = st.session_state.data.drop(columns=[target_column])
+            y = st.session_state.data[target_column]
 
-        # Add your machine learning model training and evaluation code here
-        # For example:
-        if selected_algorithm == "Decision Tree":
-            from sklearn.tree import DecisionTreeClassifier
-            model = DecisionTreeClassifier()
-        elif selected_algorithm == "Random Forest":
-            from sklearn.ensemble import RandomForestClassifier
-            model = RandomForestClassifier()
-        elif selected_algorithm == "SVM":
-            from sklearn.svm import SVC
-            model = SVC()
+            # One-hot encode categorical columns
+            categorical_columns = X.select_dtypes(include=['object']).columns
+            X = pd.get_dummies(X, columns=categorical_columns, drop_first=True)
 
-        if selected_cv == "Stratified K-Fold":
-            from sklearn.model_selection import StratifiedKFold
-            cv_method = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-        elif selected_cv == "KFold":
-            from sklearn.model_selection import KFold
-            cv_method = KFold(n_splits=5, shuffle=True, random_state=42)
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-        # Evaluate the model using cross-validation
-        cv_results = cross_val_score(model, X, y, cv=cv_method, scoring='accuracy')
+            # Add your machine learning model training and evaluation code here
+            # For example:
+            if selected_algorithm == "Decision Tree":
+                from sklearn.tree import DecisionTreeClassifier
+                model = DecisionTreeClassifier()
+            elif selected_algorithm == "Random Forest":
+                from sklearn.ensemble import RandomForestClassifier
+                model = RandomForestClassifier()
+            elif selected_algorithm == "SVM":
+                from sklearn.svm import SVC
+                model = SVC()
 
-        # Display cross-validation results
-        st.write("Cross-Validation Results:")
-        st.write("Accuracy: {:.2f} (+/- {:.2f})".format(cv_results.mean(), cv_results.std() * 2))
+            if selected_cv == "Stratified K-Fold":
+                from sklearn.model_selection import StratifiedKFold
+                cv_method = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+            elif selected_cv == "KFold":
+                from sklearn.model_selection import KFold
+                cv_method = KFold(n_splits=5, shuffle=True, random_state=42)
 
-        model.fit(X_train, y_train)
+            # Evaluate the model using cross-validation
+            cv_results = cross_val_score(model, X, y, cv=cv_method, scoring='accuracy')
 
-        # Make predictions on the testing set
-        y_pred = model.predict(X_test)
+            # Display cross-validation results
+            st.write("Cross-Validation Results:")
+            st.write("Accuracy: {:.2f} (+/- {:.2f})".format(cv_results.mean(), cv_results.std() * 2))
 
-        # Display precision, recall, and f1-score
-        st.write("### Classification Metrics:")
-        precision = precision_score(y_test, y_pred, average='weighted')
-        recall = recall_score(y_test, y_pred, average='weighted')
-        f1 = f1_score(y_test, y_pred, average='weighted')
+            model.fit(X_train, y_train)
 
-        st.write(f"Precision: {precision:.2f}")
-        st.write(f"Recall: {recall:.2f}")
-        st.write(f"F1-Score: {f1:.2f}")
+            # Make predictions on the testing set
+            y_pred = model.predict(X_test)
 
-        # Display confusion matrix
-        st.write("### Confusion Matrix:")
-        cm = confusion_matrix(y_test, y_pred)
-        fig, ax = plt.subplots(figsize=(8, 6))
-        sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=model.classes_, yticklabels=model.classes_, ax=ax)
-        plt.xlabel("Predicted")
-        plt.ylabel("True")
-        st.pyplot(fig)
+            # Display precision, recall, and f1-score
+            st.write("### Classification Metrics:")
+            precision = precision_score(y_test, y_pred, average='weighted')
+            recall = recall_score(y_test, y_pred, average='weighted')
+            f1 = f1_score(y_test, y_pred, average='weighted')
+
+            st.write(f"Precision: {precision:.2f}")
+            st.write(f"Recall: {recall:.2f}")
+            st.write(f"F1-Score: {f1:.2f}")
+
+            # Display confusion matrix
+            st.write("### Confusion Matrix:")
+            cm = confusion_matrix(y_test, y_pred)
+            fig, ax = plt.subplots(figsize=(8, 6))
+            sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=model.classes_, yticklabels=model.classes_, ax=ax)
+            plt.xlabel("Predicted")
+            plt.ylabel("True")
+            st.pyplot(fig)
+
 
 
 # Main function to run the application
