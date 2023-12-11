@@ -1,11 +1,17 @@
 import streamlit as st
 import pandas as pd
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import train_test_split
-
+from sklearn.model_selection import cross_val_score, train_test_split
 from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
+from sklearn.model_selection import StratifiedKFold, KFold
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 
 
 # Page 1: Upload Dataset with Descriptive and Inferential Statistics
@@ -126,77 +132,80 @@ def page_visualization():
         sns.boxplot(data=st.session_state.data, x=x_column, y=y_column, ax=ax)
         st.pyplot(fig)
 
-        # Perform machine learning with selected algorithm and cross-validation
-        if selected_algorithm and selected_cv:
-            st.subheader("Machine Learning Evaluation Metrics")
+    # Perform machine learning with selected algorithm and cross-validation
+    if selected_algorithm and selected_cv:
+        st.subheader("Machine Learning Evaluation Metrics")
 
-            # Allow the user to select the target column
-            target_column = st.selectbox("Select Target Column", st.session_state.data.columns)
+        # Allow the user to select the target column
+        target_column = st.selectbox("Select Target Column", st.session_state.data.columns)
 
-            # Ensure the target column is numeric
-            if st.session_state.data[target_column].dtype == 'object':
-                st.warning(f"Target column '{target_column}' is non-numeric. Please encode it before proceeding.")
-                st.stop()
+        # Split the data into features and target
+        X = st.session_state.data.drop(columns=[target_column])
+        y = st.session_state.data[target_column]
 
-            # Split the data into features and target
-            X = st.session_state.data.drop(columns=[target_column])
-            y = st.session_state.data[target_column]
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-            # One-hot encode categorical columns
-            categorical_columns = X.select_dtypes(include=['object']).columns
-            X = pd.get_dummies(X, columns=categorical_columns, drop_first=True)
+        # Preprocess categorical columns with one-hot encoding
+        categorical_columns = X.select_dtypes(include=['object']).columns.tolist()
+        numeric_columns = X.select_dtypes(exclude=['object']).columns.tolist()
 
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        preprocessor = ColumnTransformer(
+            transformers=[
+                ('num', 'passthrough', numeric_columns),
+                ('cat', OneHotEncoder(), categorical_columns)
+            ]
+        )
 
-            # Add your machine learning model training and evaluation code here
-            # For example:
-            if selected_algorithm == "Decision Tree":
-                from sklearn.tree import DecisionTreeClassifier
-                model = DecisionTreeClassifier()
-            elif selected_algorithm == "Random Forest":
-                from sklearn.ensemble import RandomForestClassifier
-                model = RandomForestClassifier()
-            elif selected_algorithm == "SVM":
-                from sklearn.svm import SVC
-                model = SVC()
+        # Create a pipeline with the preprocessing step and the model
+        pipeline = Pipeline([
+            ('preprocessor', preprocessor),
+            ('model', get_model(selected_algorithm))
+        ])
 
-            if selected_cv == "Stratified K-Fold":
-                from sklearn.model_selection import StratifiedKFold
-                cv_method = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-            elif selected_cv == "KFold":
-                from sklearn.model_selection import KFold
-                cv_method = KFold(n_splits=5, shuffle=True, random_state=42)
+        if selected_cv == "Stratified K-Fold":
+            cv_method = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+        elif selected_cv == "KFold":
+            cv_method = KFold(n_splits=5, shuffle=True, random_state=42)
 
-            # Evaluate the model using cross-validation
-            cv_results = cross_val_score(model, X, y, cv=cv_method, scoring='accuracy')
+        # Evaluate the model using cross-validation
+        cv_results = cross_val_score(pipeline, X, y, cv=cv_method, scoring='accuracy')
 
-            # Display cross-validation results
-            st.write("Cross-Validation Results:")
-            st.write("Accuracy: {:.2f} (+/- {:.2f})".format(cv_results.mean(), cv_results.std() * 2))
+        # Display cross-validation results
+        st.write("Cross-Validation Results:")
+        st.write("Accuracy: {:.2f} (+/- {:.2f})".format(cv_results.mean(), cv_results.std() * 2))
 
-            model.fit(X_train, y_train)
+        pipeline.fit(X_train, y_train)
 
-            # Make predictions on the testing set
-            y_pred = model.predict(X_test)
+        # Make predictions on the testing set
+        y_pred = pipeline.predict(X_test)
 
-            # Display precision, recall, and f1-score
-            st.write("### Classification Metrics:")
-            precision = precision_score(y_test, y_pred, average='weighted')
-            recall = recall_score(y_test, y_pred, average='weighted')
-            f1 = f1_score(y_test, y_pred, average='weighted')
+        # Display precision, recall, and f1-score
+        st.write("### Classification Metrics:")
+        precision = precision_score(y_test, y_pred, average='weighted')
+        recall = recall_score(y_test, y_pred, average='weighted')
+        f1 = f1_score(y_test, y_pred, average='weighted')
 
-            st.write(f"Precision: {precision:.2f}")
-            st.write(f"Recall: {recall:.2f}")
-            st.write(f"F1-Score: {f1:.2f}")
+        st.write(f"Precision: {precision:.2f}")
+        st.write(f"Recall: {recall:.2f}")
+        st.write(f"F1-Score: {f1:.2f}")
 
-            # Display confusion matrix
-            st.write("### Confusion Matrix:")
-            cm = confusion_matrix(y_test, y_pred)
-            fig, ax = plt.subplots(figsize=(8, 6))
-            sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=model.classes_, yticklabels=model.classes_, ax=ax)
-            plt.xlabel("Predicted")
-            plt.ylabel("True")
-            st.pyplot(fig)
+        # Display confusion matrix
+        st.write("### Confusion Matrix:")
+        cm = confusion_matrix(y_test, y_pred)
+        fig, ax = plt.subplots(figsize=(8, 6))
+        sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=pipeline.classes_, yticklabels=pipeline.classes_, ax=ax)
+        plt.xlabel("Predicted")
+        plt.ylabel("True")
+        st.pyplot(fig)
+
+# Function to get the appropriate model based on the selected algorithm
+def get_model(selected_algorithm):
+    if selected_algorithm == "Decision Tree":
+        return DecisionTreeClassifier()
+    elif selected_algorithm == "Random Forest":
+        return RandomForestClassifier()
+    elif selected_algorithm == "SVM":
+        return SVC()
 
 
 
