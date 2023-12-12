@@ -225,7 +225,7 @@ def main():
     # Display the selected page
     if selected_page == "Upload Dataset":
         page_upload_dataset()
-    elif selected_page == "Missing Values Handling":
+    elif selected_page == "Missinow g Values Handling":
         page_missing_values_handling()
     elif selected_page == "Visualizationa and Metrics":
         page_visualization()
