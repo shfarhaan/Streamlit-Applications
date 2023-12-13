@@ -386,4 +386,132 @@ with st.echo():
     exec(code)
 ```
 
-These additional components provide even more flexibility and functionality for creating interactive Streamlit applications. Experiment with these features to tailor your app to your specific needs. Streamlit's documentation is an excellent resource for exploring advanced usage and customization: [Streamlit Documentation](https://docs.streamlit.io).
+Certainly! Let's continue with more Streamlit components and features:
+
+### 46. **st.code() - Interactive Code Editing**
+Enable interactive code editing within your app.
+
+```python
+code = st.code("print('Hello, Streamlit!')")
+```
+
+### 47. **st.echo() - Show Full Code**
+Display the full code, including the sections outside the `with st.echo()` block.
+
+```python
+with st.echo(show=True):
+    # This code and its output will be displayed
+    print("Hello, Streamlit!")
+```
+
+### 48. **st.caching()**
+Control caching behavior for functions using `st.cache()`.
+
+```python
+@st.cache
+def expensive_function(arg):
+    # Some expensive computation
+    return result
+```
+
+### 49. **st.empty() - Placeholder for Components**
+Create an empty slot for dynamic content.
+
+```python
+placeholder = st.empty()
+# Later in the code
+placeholder.text("This will replace the empty slot.")
+```
+
+### 50. **Custom Themes**
+Customize the theme of your Streamlit app.
+
+```python
+# Example theme customization
+st.markdown("""
+<style>
+body {
+    color: #fff;
+    background-color: #333;
+}
+</style>
+""", unsafe_allow_html=True)
+```
+
+### 51. **st.map() - Interactive Maps**
+Display interactive maps using the `st.map()` function.
+
+```python
+import folium
+
+map_data = pd.DataFrame({"lat": [37.7749], "lon": [-122.4194]})
+st.map(map_data)
+```
+
+### 52. **st.beta_container() - Improved Layouts**
+Create improved layouts with the `st.beta_container()` function.
+
+```python
+container = st.beta_container()
+container.write("This is inside the container.")
+```
+
+### 53. **st.file_uploader() - Accept Multiple Types**
+Allow users to upload files of multiple types.
+
+```python
+uploaded_file = st.file_uploader("Choose a file", type=["csv", "txt", "xlsx"])
+```
+
+### 54. **st.selectbox() - Display Custom Labels**
+Display custom labels in the select box.
+
+```python
+options = {"Option 1": 1, "Option 2": 2, "Option 3": 3}
+selected_option = st.selectbox("Select an option", list(options.keys()), format_func=lambda x: options[x])
+```
+
+### 55. **st.balloons() - Custom Celebratory Message**
+Display custom celebratory message with balloons.
+
+```python
+if st.button("Celebrate"):
+    st.balloons("Yay! 🎉 You did it!")
+```
+
+### 56. **st.map() - Custom Tiles**
+Use custom map tiles in the `st.map()` function.
+
+```python
+st.map(map_data, tiles="Stamen Terrain")
+```
+
+### 57. **st.experimental_set_query_params()**
+Set query parameters in the URL for sharing state.
+
+```python
+st.experimental_set_query_params(selected_option=selected_option, user_name="JohnDoe")
+```
+
+### 58. **st.write() - Math Equations with Latex**
+Render math equations using Latex in `st.write()`.
+
+```python
+st.write("The quadratic formula is $x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}$")
+```
+
+### 59. **st.map() - Circle Markers**
+Add circle markers to the map.
+
+```python
+st.map(map_data, zoom=10, use_container_width=True, marker={"location": [37.7749, -122.4194], "radius": 50, "color": "red"})
+```
+
+### 60. **st.experimental_set_query_params() - Persistent State**
+Maintain persistent state in your Streamlit app.
+
+```python
+st.experimental_set_query_params(selected_option=selected_option)
+```
+
+These advanced features and components allow you to create more sophisticated and customized Streamlit applications. Explore the documentation for each feature to understand its full capabilities and use them effectively: [Streamlit Documentation](https://docs.streamlit.io).
