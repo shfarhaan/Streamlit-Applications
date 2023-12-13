@@ -170,3 +170,89 @@ def expensive_computation(a, b):
 result = expensive_computation(5, 10)
 ```
 
+### 21. **st.empty()**
+Create an empty slot to dynamically fill later.
+
+```python
+placeholder = st.empty()
+# Later in the code
+placeholder.text("This will replace the empty slot.")
+```
+
+### 22. **st.latex()**
+Render LaTeX mathematical expressions.
+
+```python
+st.latex(r"\int_0^\infty e^{-x^2} \,dx")
+```
+
+### 23. **st.pyplot()**
+Render a Matplotlib figure.
+
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3], [4, 5, 6])
+st.pyplot(fig)
+```
+
+### 24. **st.text_area()**
+Create a multiline text input area.
+
+```python
+user_input = st.text_area("Enter your text", "Default text")
+```
+
+### 25. **st.write()**
+A versatile function that can render text, data, or charts based on the input type.
+
+```python
+st.write("This is a simple text.")
+st.write(df)  # Renders a DataFrame
+st.write(fig)  # Renders a Matplotlib figure
+```
+
+### 26. **st.code()**
+Render code blocks with syntax highlighting.
+
+```python
+code = """
+def hello_world():
+    print("Hello, World!")
+
+hello_world()
+"""
+st.code(code, language="python")
+```
+
+### 27. **st.download_button()**
+Create a download button for downloading files.
+
+```python
+download_button = st.download_button("Download CSV", df.to_csv(), key="download_button")
+```
+
+### 28. **st.balloons()**
+Display celebratory balloons animation.
+
+```python
+if st.button("Celebrate"):
+    st.balloons()
+```
+
+### 29. **st.help()**
+Show information or help text.
+
+```python
+st.help(pd.DataFrame)
+```
+
+### 30. **st.video()**
+Embed a video into your app.
+
+```python
+st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+```
+
+These components provide a wide range of options for building interactive and engaging Streamlit applications. You can mix and match these components to create a rich and dynamic user interface for your data analysis or machine learning projects. Refer to the official [Streamlit documentation](https://docs.streamlit.io) for more details and examples.
