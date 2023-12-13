@@ -255,4 +255,135 @@ Embed a video into your app.
 st.video("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 ```
 
-These components provide a wide range of options for building interactive and engaging Streamlit applications. You can mix and match these components to create a rich and dynamic user interface for your data analysis or machine learning projects. Refer to the official [Streamlit documentation](https://docs.streamlit.io) for more details and examples.
+Certainly! Let's continue with more Streamlit components:
+
+### 31. **st.warning() and st.error()**
+Display warning and error messages.
+
+```python
+st.warning("This is a warning message.")
+st.error("Oops! An error occurred.")
+```
+
+### 32. **st.success()**
+Display a success message.
+
+```python
+st.success("Operation was successful!")
+```
+
+### 33. **st.write() - Displaying Images**
+Display images using `st.write()`.
+
+```python
+from PIL import Image
+
+image = Image.open("example_image.jpg")
+st.write("Here's an image:")
+st.image(image, caption="Example Image", use_column_width=True)
+```
+
+### 34. **st.text_input() - Password Input**
+Create a password input field.
+
+```python
+password = st.text_input("Enter Password", type="password")
+```
+
+### 35. **st.select_slider()**
+Create a slider with discrete values.
+
+```python
+selected_value = st.select_slider("Select a value", options=[1, 2, 3, 4, 5])
+```
+
+### 36. **st.multiselect()**
+Create a multiselect dropdown.
+
+```python
+selected_options = st.multiselect("Select options", ["Option 1", "Option 2", "Option 3"])
+```
+
+### 37. **st.date_input() and st.time_input()**
+Get date and time input from the user.
+
+```python
+selected_date = st.date_input("Select a date")
+selected_time = st.time_input("Select a time")
+```
+
+### 38. **st.file_uploader() - Multiple Files**
+Allow users to upload multiple files.
+
+```python
+uploaded_files = st.file_uploader("Choose files", type=["csv", "txt"], accept_multiple_files=True)
+```
+
+### 39. **st.progress()**
+Display a progress bar.
+
+```python
+progress = st.progress(0)
+for percent_complete in range(100):
+    time.sleep(0.1)
+    progress.progress(percent_complete + 1)
+```
+
+### 40. **st.write() - Audio**
+Embed an audio file into your app.
+
+```python
+audio_file = open("example_audio.mp3", "rb").read()
+st.audio(audio_file, format="audio/mp3")
+```
+
+### 41. **st.write() - Video with Loop**
+Embed a video and set it to loop.
+
+```python
+video_file = open("example_video.mp4", "rb").read()
+st.video(video_file, format="video/mp4", start_time=0)
+```
+
+### 42. **st.beta_columns()**
+Create multiple columns for layout.
+
+```python
+col1, col2 = st.beta_columns(2)
+with col1:
+    st.write("Content of column 1")
+with col2:
+    st.write("Content of column 2")
+```
+
+### 43. **st.radio() - Horizontal Orientation**
+Create a horizontal radio button group.
+
+```python
+selected_option = st.radio("Select one", ["Option 1", "Option 2", "Option 3"], format_func=lambda x: f"{x}")
+```
+
+### 44. **st.expander()**
+Create an expandable/collapsible container.
+
+```python
+with st.expander("See more"):
+    st.write("This is hidden by default.")
+```
+
+### 45. **st.echo()**
+Display code and its output.
+
+```python
+code = """
+def hello_world():
+    print("Hello, World!")
+
+hello_world()
+"""
+with st.echo():
+    # This code and its output will be displayed
+    exec(code)
+```
+
+These additional components provide even more flexibility and functionality for creating interactive Streamlit applications. Experiment with these features to tailor your app to your specific needs. Streamlit's documentation is an excellent resource for exploring advanced usage and customization: [Streamlit Documentation](https://docs.streamlit.io).
