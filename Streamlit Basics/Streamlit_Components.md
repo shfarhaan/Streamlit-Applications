@@ -1,4 +1,4 @@
-Streamlit provides a variety of components and widgets that you can use to build interactive and user-friendly web applications. Here are some of the key components along with examples:
+Streamlit provides a variety of components and widgets that we can use to build interactive and user-friendly web applications. Here are some of the key components along with examples:
 
 ### 1. **st.title()**
 Display a title for your app.
