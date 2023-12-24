@@ -6,74 +6,91 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 
-# Step 1: Load Dataset
-@st.cache
-def load_data():
-    # Load your dataset here
-    # For example: df = pd.read_csv('your_dataset.csv')
-    pass
+# Import necessary libraries and modules
+import streamlit as st
+import pandas as pd
 
-# Step 2: Preprocess Dataset
+# Function to upload and load dataset
+def load_dataset():
+    uploaded_file = st.file_uploader("Upload your dataset", type=["csv", "xlsx"])
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file)  # Adjust for different file types
+        return df
+
+
+# Data preprocessing function
 def preprocess_data(df):
-    # Your preprocessing steps here
-    pass
+    # Perform necessary data preprocessing steps
+    # ...
 
-# Step 3: Handle Missing Values
+    return preprocessed_data
+
+
+# Handling missing values function
 def handle_missing_values(df):
-    # Your missing value handling logic here
-    pass
+    # Implement code to handle missing values
+    # ...
 
-# Step 4: Fine-tune Dataset
-def fine_tune_dataset(df, selected_genres):
-    # Your fine-tuning logic here
-    pass
+    return df_cleaned
 
-# Step 5: Train Ensemble Models
-def train_ensemble_models(X_train, y_train):
-    # Train multiple ensemble models
-    model_rf = RandomForestClassifier()
-    model_gb = GradientBoostingClassifier()
 
-    ensemble_model = VotingClassifier(estimators=[
-        ('rf', model_rf),
-        ('gb', model_gb),
-        # Add more ensemble models if needed
-    ], voting='soft')
+# Fine-tuning and algorithm selection
+def fine_tune_and_select_algorithm(preprocessed_data):
+    # Fine-tuning steps
+    # ...
 
-    ensemble_model.fit(X_train, y_train)
+    # Provide options for algorithm selection
+    selected_algorithm = st.multiselect("Select Ensemble Algorithms (up to 3)", ["Algorithm1", "Algorithm2", "Algorithm3"])
 
-    return ensemble_model
+    # Algorithm-specific fine-tuning
+    if "Algorithm1" in selected_algorithm:
+        # Fine-tuning for Algorithm1
+        # ...
 
-# Step 6: Show Recommendations
-def show_recommendations(ensemble_model, selected_genres, df):
-    # Your recommendation logic here
-    pass
+    # Repeat for other selected algorithms
 
-# Main function to run the app
+    return tuned_data
+
+# Genre selection
+def select_genres():
+    selected_genres = st.multiselect("Select Movie Genres", ["Action", "Drama", "Comedy", "Sci-Fi", "..."])
+    return selected_genres
+
+
+# Display recommendations
+def display_recommendations(recommendations):
+    # Display recommendations using Streamlit components
+    # ...
+
+# Streamlit app structure
 def main():
     st.title("Movie Recommendation System")
 
-    # Step 1: Load Dataset
-    df = load_data()
+    # Page selection sidebar
+    page = st.sidebar.selectbox("Select Page", ["Upload Data", "Preprocess Data", "Handle Missing Values",
+                                                "Fine-Tune and Select Algorithm", "Select Genres", "Display Recommendations"])
 
-    # Step 2: Preprocess Dataset
-    df = preprocess_data(df)
+    # Display corresponding page based on user selection
+    if page == "Upload Data":
+        df = load_dataset()
+    elif page == "Preprocess Data":
+        preprocessed_data = preprocess_data(df)
+    elif page == "Handle Missing Values":
+        df_cleaned = handle_missing_values(df)
+    elif page == "Fine-Tune and Select Algorithm":
+        tuned_data = fine_tune_and_select_algorithm(preprocessed_data)
+    elif page == "Select Genres":
+        selected_genres = select_genres()
+    elif page == "Display Recommendations":
+        recommendations = generate_recommendations(tuned_data, selected_genres)
+        display_recommendations(recommendations)
 
-    # Step 3: Handle Missing Values
-    df = handle_missing_values(df)
-
-    # Step 4: Fine-tune Dataset
-    selected_genres = fine_tune_dataset(df)
-
-    # Split the dataset for training
-    X_train, X_test, y_train, y_test = train_test_split(df.drop('target_column', axis=1), df['target_column'], test_size=0.2, random_state=42)
-
-    # Step 5: Train Ensemble Models
-    ensemble_model = train_ensemble_models(X_train, y_train)
-
-    # Step 6: Show Recommendations
-    show_recommendations(ensemble_model, selected_genres, df)
-
-# Run the app
 if __name__ == "__main__":
     main()
+
+# Generate movie recommendations
+def generate_recommendations(tuned_data, selected_genres):
+    # Implement recommendation generation logic
+    # ...
+
+    return recommendations
