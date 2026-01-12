@@ -1,75 +1,131 @@
-### Step 1: Install Streamlit
-Make sure you have Python installed on your system. You can install Streamlit using pip:
+### Streamlit Basics Tutorial
+
+A comprehensive guide to learning Streamlit from scratch.
+
+#### Overview
+This tutorial provides a complete introduction to Streamlit, covering all essential components and best practices. Perfect for beginners who want to build interactive web applications with Python.
+
+#### What You'll Learn
+
+##### 1. Text Elements
+- Titles and headers
+- Markdown formatting
+- Text and captions
+- Code display
+
+##### 2. Data Display
+- DataFrames and tables
+- Metrics and statistics
+- Data visualization
+
+##### 3. Interactive Widgets
+- Text and number inputs
+- Sliders and select boxes
+- Checkboxes and radio buttons
+- Buttons with callbacks
+- File uploaders
+- Multi-select dropdowns
+
+##### 4. Visualizations
+- Line charts
+- Area charts
+- Bar charts
+- Integration with Matplotlib/Seaborn
+
+##### 5. Layout Elements
+- Columns for side-by-side content
+- Expanders for collapsible sections
+- Sidebar for navigation
+
+##### 6. Status Messages
+- Success, info, warning, and error messages
+- Special effects (balloons, snow)
+
+#### Requirements
+```bash
+streamlit>=1.39.0
+pandas>=2.2.0
+numpy>=1.26.0
+```
+
+#### Installation
+
+1. Install Streamlit and dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+#### Running the Tutorial
+
+Navigate to the Streamlit Basics directory and run:
 
 ```bash
-pip install streamlit
+streamlit run "tutorial 1.py"
 ```
 
-### Step 2: Create a Python Script
-Create a new Python script, for example, `app.py`. This script will contain your Streamlit application.
+This will launch the tutorial in your default web browser at `http://localhost:8501`.
 
-### Step 3: Import Streamlit and Create a Basic App
-Open `app.py` and import the Streamlit library. Create a basic Streamlit app with a title and a simple text.
+#### Tutorial Structure
 
-```python
-import streamlit as st
+The tutorial is organized into sections:
+1. **Text Elements** - Learn how to display different types of text
+2. **Data Display** - Work with DataFrames and tables
+3. **Interactive Widgets** - Add user input controls
+4. **Charts** - Create data visualizations
+5. **Status Elements** - Provide user feedback
+6. **Container Elements** - Organize your layout
 
-# Set page title
-st.title("My Streamlit App")
+#### Tips for Learning
 
-# Add text to the app
-st.write("This is a simple Streamlit app.")
-```
+1. **Experiment**: Modify the code and see what happens
+2. **Read the comments**: Each section is well-documented
+3. **Try uploading files**: Use sample CSV files to test the file uploader
+4. **Customize**: Change colors, sizes, and options to make it your own
+5. **Check the sidebar**: Many controls are demonstrated there
 
-### Step 4: Run Your App Locally
-Open a terminal, navigate to the directory containing `app.py`, and run the following command:
+#### Next Steps
+
+After completing this tutorial, try:
+1. Building your own data dashboard
+2. Creating a machine learning model interface
+3. Exploring the other applications in this repository
+4. Reading the [official Streamlit documentation](https://docs.streamlit.io)
+
+#### Additional Resources
+
+- **Streamlit Components**: See `Streamlit_Components.md` for detailed component reference
+- **Official Docs**: https://docs.streamlit.io
+- **API Reference**: https://docs.streamlit.io/library/api-reference
+- **Community Forum**: https://discuss.streamlit.io
+- **Gallery**: https://streamlit.io/gallery
+
+#### Common Commands
 
 ```bash
-streamlit run app.py
+# Run the tutorial
+streamlit run "tutorial 1.py"
+
+# Run with auto-reload on file changes
+streamlit run "tutorial 1.py" --server.runOnSave true
+
+# Run on a different port
+streamlit run "tutorial 1.py" --server.port 8502
+
+# Get help
+streamlit --help
 ```
 
-This will launch a local server, and you can view your app in a web browser at `http://localhost:8501`. Make sure to replace `app.py` with your actual script name if it's different.
+#### Contributing
 
-### Step 5: Add Interactivity
-Enhance your app by adding interactive elements. For example, you can use sliders, buttons, and text input fields. Update `app.py`:
+Found an issue or have a suggestion? Feel free to:
+1. Open an issue on GitHub
+2. Submit a pull request
+3. Contact the maintainer
 
-```python
-import streamlit as st
+#### About
 
-# Set page title
-st.title("Interactive Streamlit App")
+**Created by:** Sazzad Hussain Farhaan  
+**Contact:** shfarhaan21@gmail.com
 
-# Add a slider
-value = st.slider("Select a value", 0, 100, 50)
-
-# Add a button
-if st.button("Click me"):
-    st.write(f"You selected: {value}")
-```
-
-### Step 6: Display Data
-You can easily display charts and tables using Streamlit. Add the following to your script:
-
-```python
-import streamlit as st
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Set page title
-st.title("Data Visualization with Streamlit")
-
-# Generate random data
-data = pd.DataFrame(np.random.randn(100, 2), columns=['A', 'B'])
-
-# Display data table
-st.dataframe(data)
-
-# Display a line chart
-st.line_chart(data)
-```
-
-### Step 7: Deploy Your App
-Once you're satisfied with your app, you can deploy it to platforms like Streamlit Sharing, Heroku, or any other hosting service.
-
-Congratulations! You've created a simple Streamlit app with basic interactivity and data visualization. Feel free to explore more features and widgets in the [Streamlit documentation](https://docs.streamlit.io).
+---
+*Updated with Streamlit 1.39.0+ features and modern Python practices*
