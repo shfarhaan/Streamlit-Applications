@@ -39,7 +39,69 @@ pip install -r requirements.txt
 
 ## 📁 Applications
 
-### 1. Iris EDA Web App
+## 🤖 Modern AI/LLM Applications (NEW!)
+
+### 1. RAG Document Q&A System
+**Location:** `RAG_Document_QA/`
+
+Retrieval-Augmented Generation (RAG) architecture for document question-answering:
+- Upload and process documents (text files or manual input)
+- Smart text chunking for optimal retrieval
+- Semantic search using embeddings
+- Context-aware answer generation
+- Sample documents included for immediate testing
+- Demonstrates modern RAG pattern used in production systems
+
+**Run:**
+```bash
+cd RAG_Document_QA
+streamlit run app.py
+```
+
+**Production Ready**: Framework for integrating OpenAI, Anthropic, or open-source LLMs with vector databases like Pinecone, Weaviate, or ChromaDB.
+
+### 2. LLM Text Analysis
+**Location:** `LLM_Text_Analysis/`
+
+Comprehensive text analysis toolkit with multiple NLP capabilities:
+- **Sentiment Analysis**: Detect emotional tone with confidence scores
+- **Text Summarization**: Automatic condensation of long texts
+- **Key Phrase Extraction**: Identify important keywords and topics
+- **Text Generation**: Continue prompts in different styles
+- **Translation Framework**: Multi-language support structure
+
+**Run:**
+```bash
+cd LLM_Text_Analysis
+streamlit run app.py
+```
+
+**Use Cases**: Customer feedback analysis, content creation, SEO optimization, research summarization, social media monitoring.
+
+### 3. AI Chatbot with Memory
+**Location:** `AI_Chatbot_with_Memory/`
+
+Conversational AI with context-aware interactions:
+- Natural conversation flow with memory
+- Adjustable context window
+- Conversation analytics and statistics
+- Export chat history as JSON
+- Session persistence
+- Modern chat interface with timestamps
+
+**Run:**
+```bash
+cd AI_Chatbot_with_Memory
+streamlit run app.py
+```
+
+**Perfect for**: Customer support bots, personal assistants, interactive learning, research assistants. Includes integration guides for OpenAI GPT-4, Anthropic Claude, and local LLMs.
+
+---
+
+## 📊 Traditional ML/Data Science Applications
+
+### 4. Iris EDA Web App
 **Location:** `Iris_EDA_Web_App/`
 
 Performs exploratory data analysis (EDA) on the classic Iris dataset. Features include:
@@ -56,7 +118,7 @@ streamlit run app.py
 streamlit run iris_app.py
 ```
 
-### 2. Boosting with Visualization
+### 5. Boosting with Visualization
 **Location:** `Boosting with Visualization/`
 
 Interactive hyperparameter tuning for boosting algorithms:
@@ -72,7 +134,7 @@ cd "Boosting with Visualization"
 streamlit run app.py
 ```
 
-### 3. Boosting Web App
+### 6. Boosting Web App
 **Location:** `Boosting_Web_App/`
 
 Simplified boosting algorithm comparison using synthetic data:
@@ -87,7 +149,7 @@ cd Boosting_Web_App
 streamlit run app.py
 ```
 
-### 4. Customer Churn Prediction
+### 7. Customer Churn Prediction
 **Location:** `Customer Churn/`
 
 Multi-page application for predicting customer churn:
@@ -102,7 +164,7 @@ cd "Customer Churn"
 streamlit run app.py
 ```
 
-### 5. MultiPage Web App
+### 8. MultiPage Web App
 **Location:** `MultiPage_WebApp/`
 
 Two different approaches to creating multi-page Streamlit applications:
@@ -132,7 +194,7 @@ cd MultiPage_WebApp/Using_Navbar
 streamlit run app.py
 ```
 
-### 6. Recommendation System
+### 9. Recommendation System
 **Location:** `Recommendation System/`
 
 Content-based movie recommendation system with two versions:
@@ -158,7 +220,7 @@ streamlit run app.py
 streamlit run beta.py
 ```
 
-### 7. Streamlit Basics Tutorial
+### 10. Streamlit Basics Tutorial
 **Location:** `Streamlit Basics/`
 
 Comprehensive tutorial covering all Streamlit components:
@@ -186,6 +248,66 @@ streamlit run "tutorial 1.py"
 
 ### Issue: Dataset not found
 **Solution:** Some apps like the Recommendation System will use sample data if the dataset file is missing. For other apps, make sure you're running the app from its directory.
+
+### Issue: LLM/API integration for AI apps
+**Solution:** The modern AI applications (RAG, LLM Text Analysis, Chatbot) are designed as demos with simulated responses. For production use, you'll need to:
+1. Sign up for API keys (OpenAI, Anthropic, etc.)
+2. Install the respective SDK: `pip install openai` or `pip install anthropic`
+3. Follow the integration guides in each app's README
+4. Set environment variables for API keys
+
+## 🚀 Modern AI/LLM Integration Guide
+
+The three new AI applications demonstrate modern architectures that can be enhanced with actual LLM APIs:
+
+### Quick Integration Steps
+
+1. **Choose Your LLM Provider:**
+   - **OpenAI** (GPT-4, GPT-3.5): Most popular, high quality
+   - **Anthropic** (Claude): Long context, strong reasoning
+   - **Open-source** (Llama, Mistral): Self-hosted, free
+
+2. **Get API Keys:**
+   ```bash
+   # OpenAI
+   export OPENAI_API_KEY="your-key-here"
+   
+   # Anthropic
+   export ANTHROPIC_API_KEY="your-key-here"
+   ```
+
+3. **Install SDK:**
+   ```bash
+   pip install openai anthropic
+   ```
+
+4. **Update Application Code:**
+   Each application includes detailed integration examples in its README.
+
+### Example: Adding GPT-4 to the Chatbot
+
+```python
+import openai
+import os
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+def generate_response(messages):
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=messages,
+        temperature=0.7
+    )
+    return response.choices[0].message.content
+```
+
+### Learning Path for AI Apps
+
+1. **Start with demos**: Run the applications to understand the UI/UX
+2. **Read the architecture**: Check each README for system design
+3. **Try sample data**: Use built-in samples to test functionality
+4. **Follow integration guides**: Step-by-step API integration instructions
+5. **Build your own**: Customize and extend for your use case
 
 ## 📚 Documentation References
 
