@@ -64,9 +64,9 @@ def page_missing_values_handling():
 
     # Perform missing values handling based on the selected method
     if selected_method == "Forward Fill":
-        df_filled = st.session_state.data.fillna(method="ffill")
+        df_filled = st.session_state.data.ffill()
     elif selected_method == "Backward Fill":
-        df_filled = st.session_state.data.fillna(method="bfill")
+        df_filled = st.session_state.data.bfill()
     elif selected_method == "Mean":
         df_filled = st.session_state.data.fillna(st.session_state.data.mean())
     elif selected_method == "Median":
@@ -219,15 +219,15 @@ def main():
         session_state.data = None
 
     # Create a drop-down menu for navigation
-    page_options = ["Upload Dataset", "Missing Values Handling", "Visualizationa and Metrics"]
+    page_options = ["Upload Dataset", "Missing Values Handling", "Visualization and Metrics"]
     selected_page = st.sidebar.selectbox("Select Page", page_options)
 
     # Display the selected page
     if selected_page == "Upload Dataset":
         page_upload_dataset()
-    elif selected_page == "Missinow g Values Handling":
+    elif selected_page == "Missing Values Handling":
         page_missing_values_handling()
-    elif selected_page == "Visualizationa and Metrics":
+    elif selected_page == "Visualization and Metrics":
         page_visualization()
 
 if __name__ == "__main__":

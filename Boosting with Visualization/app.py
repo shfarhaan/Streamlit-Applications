@@ -56,9 +56,9 @@ if uploaded_file is not None:
 
     # Visualize missing values
     st.subheader("Visualization of Missing Values:")
-    plt.figure(figsize=(8, 6))
-    sns.heatmap(df.isnull(), cbar=False, cmap='viridis')
-    st.pyplot()
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sns.heatmap(df.isnull(), cbar=False, cmap='viridis', ax=ax)
+    st.pyplot(fig)
 
 
 

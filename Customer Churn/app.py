@@ -45,7 +45,9 @@ def explore_data():
         st.header("Data Visualization")
         st.subheader("Correlation Matrix")
         corr_matrix = st.session_state.df.corr()
-        st.write(sns.heatmap(corr_matrix, annot=True, cmap="coolwarm").figure)
+        fig, ax = plt.subplots()
+        sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", ax=ax)
+        st.pyplot(fig)
 
         st.subheader("Customer Churn Distribution")
         churn_count = st.session_state.df['Churn'].value_counts()

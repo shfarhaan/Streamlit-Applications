@@ -41,7 +41,7 @@ def main():
     my_dataset = "iris.csv"
 
     # To Improve speed and cache data
-    @st.cache_data(persist=True)
+    @st.cache_data
     def explore_data(dataset):
         df = pd.read_csv(os.path.join(dataset))
         return df
@@ -99,19 +99,22 @@ def main():
 
     # Show Plots
     if st.checkbox("Simple Bar Plot with Matplotlib "):
-        data.plot(kind='bar')
-        st.pyplot()
+        fig, ax = plt.subplots()
+        data.plot(kind='bar', ax=ax)
+        st.pyplot(fig)
 
     # Show Correlation Plots
     if st.checkbox("Simple Correlation Plot with Matplotlib "):
-        plt.matshow(data.corr())
-        st.pyplot()
+        fig = plt.figure()
+        plt.matshow(data.corr(), fignum=fig.number)
+        st.pyplot(fig)
 
     # Show Correlation Plots with Sns
     if st.checkbox("Simple Correlation Plot with Seaborn "):
-        st.write(sns.heatmap(data.corr(), annot=True))
+        fig, ax = plt.subplots()
+        sns.heatmap(data.corr(), annot=True, ax=ax)
         # Use Matplotlib to render seaborn
-        st.pyplot()
+        st.pyplot(fig)
 
     # Show Plots
     if st.checkbox("Bar Plot of Groups or Counts"):
