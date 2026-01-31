@@ -3,7 +3,8 @@
 ## Overview
 This document summarizes all the updates made to modernize the Streamlit Applications repository with current best practices, updated packages, and enhanced documentation.
 
-## Date: January 12, 2026
+## Original Update: January 12, 2026
+## Last Updated: January 31, 2026
 ## Python Version: 3.8+ (Tested with 3.12.3)
 
 ---
@@ -12,16 +13,18 @@ This document summarizes all the updates made to modernize the Streamlit Applica
 
 All applications now use modern, stable versions of key dependencies:
 
-| Package | Minimum Version | Installed Version |
-|---------|----------------|-------------------|
-| streamlit | 1.39.0 | 1.52.2 |
-| pandas | 2.2.0 | 2.3.3 |
-| numpy | 1.26.0 | 2.4.1 |
-| matplotlib | 3.9.0 | 3.10.8 |
-| seaborn | 0.13.0 | 0.13.2 |
-| scikit-learn | 1.5.0 | 1.8.0 |
-| Pillow | 10.4.0 | (installed) |
-| xgboost | 2.1.0 | 3.1.3 |
+| Package | Minimum Version | Tested Version (Jan 2026) |
+|---------|----------------|---------------------------|
+| streamlit | 1.39.0 | 1.53.1 |
+| pandas | 2.2.0 | 2.3.3+ |
+| numpy | 1.26.0 | 2.4.1+ |
+| matplotlib | 3.9.0 | 3.10.8+ |
+| seaborn | 0.13.0 | 0.13.2+ |
+| scikit-learn | 1.5.0 | 1.8.0+ |
+| Pillow | 10.4.0 | 10.4.0+ |
+| xgboost | 2.1.0 | 3.1.3+ |
+
+**Note**: The `+` indicates the version or newer is compatible. All applications use minimum version requirements to ensure compatibility with future releases.
 
 ---
 

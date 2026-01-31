@@ -227,7 +227,8 @@ answer = response.content[0].text
 #### Credits
 
 **Created by**: Sazzad Hussain Farhaan  
-**Email**: shfarhaan21@gmail.com
+**Email**: shfarhaan21@gmail.com  
+**Last Updated**: January 2026
 
 ---
-*Modern AI application demonstrating RAG architecture with Streamlit*
+*Modern AI application demonstrating RAG architecture with Streamlit v1.39.0+*

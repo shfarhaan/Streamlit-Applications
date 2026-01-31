@@ -401,7 +401,8 @@ def log_interaction(user_id, query, response, tokens, time):
 #### Credits
 
 **Created by**: Sazzad Hussain Farhaan  
-**Email**: shfarhaan21@gmail.com
+**Email**: shfarhaan21@gmail.com  
+**Last Updated**: January 2026
 
 ---
-*Modern conversational AI with memory using Streamlit*
+*Modern conversational AI with memory using Streamlit v1.39.0+*

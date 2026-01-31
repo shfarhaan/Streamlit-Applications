@@ -312,7 +312,8 @@ def track_usage(user_id, tokens, cost):
 #### Credits
 
 **Created by**: Sazzad Hussain Farhaan  
-**Email**: shfarhaan21@gmail.com
+**Email**: shfarhaan21@gmail.com  
+**Last Updated**: January 2026
 
 ---
-*Modern NLP and LLM text analysis with Streamlit*
+*Modern NLP and LLM text analysis with Streamlit v1.39.0+*

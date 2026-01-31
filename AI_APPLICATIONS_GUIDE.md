@@ -1,5 +1,9 @@
 # Modern AI/LLM Applications - Quick Start Guide
 
+**Last Updated**: January 31, 2026  
+**Repository**: [Streamlit-Applications](https://github.com/shfarhaan/Streamlit-Applications)  
+**Author**: Sazzad Hussain Farhaan
+
 This document provides a quick overview of the three new AI/LLM applications added to the repository.
 
 ## 🎯 New Applications Overview
